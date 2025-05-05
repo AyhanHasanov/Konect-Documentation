@@ -13,7 +13,7 @@
 ## 1.2. Controllers
 |Endpoint|Method|Controller|
 |:--|:--:|:--|
-|/api/v1/competition|POST|Competition
+|/api/v1/competition|POST|[Competition](https://github.com/AyhanHasanov/Konect-Documentation/blob/main/Controllers/Competition.md)
 |/api/v1/demand_parser|POST|Demand
 |/api/v1/demand_average|POST|Demand
 |/api/v1/demand_time_parser|POST|Demand
