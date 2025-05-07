@@ -1,8 +1,10 @@
+# Utilities Service
+
 This document explains the logic inside the `utilities.py` service, which is used to retrieve **unique electric utility providers** for a specific sector and location using OpenEI.
 
 ---
 
-# Purpose
+## Purpose
 
 The service supports the `/api/v1/utilities` endpoint by:
 
@@ -14,7 +16,7 @@ The service supports the `/api/v1/utilities` endpoint by:
 
 ---
 
-# Function: `get_utilities(latitude, longitude, sector)`
+## Function: `get_utilities(latitude, longitude, sector)`
 
 ### What it does:
 
@@ -38,15 +40,15 @@ get_utilities(42.123, -71.456, "Commercial")
 If no data is returned or providers are not found, returns an empty list.
 
 ---
-# Helper Function: `get_unique_utility_providers(plans)`
+## Helper Function: `get_unique_utility_providers(plans)`
 
-## What it does:
+### What it does:
 
 - Iterates through rate plan objects
 
 - Extracts and returns a list of **unique `utility` values**    
 
-## Example:
+### Example:
 
 ```python
 [
@@ -63,7 +65,7 @@ If no data is returned or providers are not found, returns an empty list.
 ```
 
 ---
-# Used In
+## Used In
 
 - `utility.py` router
 

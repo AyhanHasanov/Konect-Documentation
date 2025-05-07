@@ -1,4 +1,5 @@
 # Score Service
+
 ## Overview
 The service defines 3 functions - `get_score` (main function used by controllers), `calculate_categories` and `normalize`, the latter two being helper functions used by the `get_score`.
 

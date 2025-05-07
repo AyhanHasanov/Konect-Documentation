@@ -1,4 +1,4 @@
-# Area
+# Area Service
 
 This service provides access to **population data** for a given ZCTA code.
 It’s used to estimate **market size** or **user potential** in EV charger ROI calculations.

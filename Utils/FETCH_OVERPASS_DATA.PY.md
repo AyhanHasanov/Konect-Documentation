@@ -1,3 +1,5 @@
+# Fetch Overpass Data Util
+
 This document explains the logic inside the utility file:  
 **`utils/fetch_overpass_data.py`**
 
@@ -5,7 +7,7 @@ It is used during **traffic density modeling and charger ROI prediction**, by re
 
 ---
 
-# Purpose
+## Purpose
 
 This utility supports charger demand modeling by estimating **traffic node behavior** in the area:
 
@@ -18,24 +20,24 @@ This utility supports charger demand modeling by estimating **traffic node behav
 
 The output helps train or power ML models that estimate **weekly visits** and **potential lift** for chargers installed at the target coordinates.
 
-# Function: `fetch_overpass_data(lat, lon, radius_km)`
+## Function: `fetch_overpass_data(lat, lon, radius_km)`
 
 Sends a GET request to the Overpass API and fetches road-related nodes (motorway, trunk, primary) within the radius around the given latitude and longitude.
 
-## Logic:
+### Logic:
 
 - Tries up to **4 times** with backoff if the request fails
 
 - Returns parsed JSON of node results, or `None` on failure
 
 
-## Example:
+### Example:
 
 ```python
 data = fetch_overpass_data(42.123, -71.456, 250)
 ```
 
-# Function: `process_nodes(data, target_lat, target_lon, small_radius_km, start_date, end_date)`
+## Function: `process_nodes(data, target_lat, target_lon, small_radius_km, start_date, end_date)`
 
 Parses the Overpass API result into **three categories** based on distance and timestamp:
 
@@ -50,11 +52,11 @@ Returns 3 lists of `(lat, lon, timestamp)` tuples.
 
 ---
 
-# Function: `bin_nodes_by_distance(nodes, target_lat, target_lon, bin_size_km=10)`
+## Function: `bin_nodes_by_distance(nodes, target_lat, target_lon, bin_size_km=10)`
 
 Divides the node list into **distance bins** from the center (e.g., 0–10 km, 10–20 km).
 
-## Output:
+### Output:
 
 - A `Counter` object where keys = bin range (e.g. `0`, `10`)
 
@@ -62,7 +64,7 @@ Divides the node list into **distance bins** from the center (e.g., 0–10 km, 1
 
 ---
 
-# Function: `process_location(row, ...)`
+## Function: `process_location(row, ...)`
 
 Wrapper for one (latitude, longitude) pair stored in a row:
 
@@ -76,7 +78,7 @@ Wrapper for one (latitude, longitude) pair stored in a row:
 
 ---
 
-# Function: `run_overpass_pipeline(latitude, longitude, bin_miles=True)`
+## Function: `run_overpass_pipeline(latitude, longitude, bin_miles=True)`
 
 Full end-to-end utility for generating Overpass-based node stats for a single location:
 
@@ -89,7 +91,7 @@ Full end-to-end utility for generating Overpass-based node stats for a single lo
 4. Optionally converts km bins to **miles**
 
 
-# Used In:
+## Used In:
 
 - [`run_nodes_lift_service()` in `node_lifts_calculations.py`](node_lifts_calculations.md)
 

@@ -1,4 +1,6 @@
-### Purpose
+# ZCTA Crosswalk Service
+
+## Purpose
 
 Converts **ZIP codes** to **ZCTA** (ZIP Code Tabulation Area) — a standardized geographic unit used by the US Census Bureau.
 

@@ -1,3 +1,5 @@
+# Response Error Util
+
 ## Purpose
 
 Provides a **custom exception class** to simplify consistent error reporting in API responses.

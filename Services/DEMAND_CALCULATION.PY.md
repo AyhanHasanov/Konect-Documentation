@@ -1,3 +1,4 @@
+# Demand Calculation Service
 
 This document explains the **EV charger demand cost estimation logic** in `services/demand_calculation.py`.
 
