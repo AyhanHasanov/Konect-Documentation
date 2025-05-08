@@ -1,3 +1,5 @@
+# Charger Levels Util
+
 This document explains the logic inside the utility file:  
  **`utils/charger_levels.py`**
 

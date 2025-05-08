@@ -1,3 +1,5 @@
+# Open Charge Map
+
 is document explains the logic inside the file: **`api/openchargemap.py`**
 
 Its job is to connect to the **OpenChargeMap API** and fetch EV charging station data for a given location.

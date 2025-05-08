@@ -1,10 +1,12 @@
+# NEVI
+
 This document explains the logic inside the file:  **`api/nevi.py`**
 
 Its job is to determine **if a given location is near a federally designated NEVI highway route**, using GIS path data from ArcGIS.
 
 ---
 
-# Purpose
+## Purpose
 
 This module supports the **ROI simulation pipeline** by answering:
 
@@ -22,9 +24,9 @@ It does so by:
 
 ---
 
-# Function: `check_nevi_proximity_arcgis(lat, lon, nevi_routes, radius)`
+## Function: `check_nevi_proximity_arcgis(lat, lon, nevi_routes, radius)`
 
-## Input:
+### Input:
 
 - `lat`, `lon`: Latitude and longitude of the EV charger
 
@@ -32,7 +34,7 @@ It does so by:
 
 - `radius`: Proximity threshold (in meters)
 
-## What It Does:
+### What It Does:
 
 1. Iterates through **each NEVI route** and its individual **geometry paths**
     
@@ -56,13 +58,13 @@ It does so by:
 
 ---
 
-# Function: `is_in_geodesic(lat, lon, radius, close_points)`
+## Function: `is_in_geodesic(lat, lon, radius, close_points)`
 
 ### Purpose:
 
 Checks if any points in `close_points` (from NEVI paths) are within the desired radius of the target point.
 
-## What It Does:
+### What It Does:
 
 - Loops through filtered NEVI points
     
@@ -75,14 +77,14 @@ This ensures high **geographic precision**.
 
 ---
 
-# Function: `fetch_nevi_routes(state)`
+## Function: `fetch_nevi_routes(state)`
 
-## Input:
+### Input:
 
 - `state`: Full name of a U.S. state (e.g. `"Colorado"`)
 
 
-## What It Does:
+### What It Does:
 
 1. Builds a query to the **ArcGIS API** using the given state:
 
@@ -100,7 +102,7 @@ data.get("features", [])
 
 Which is a list of NEVI route geometries for the specified state.
 
-## Output Example
+### Output Example
 
 The proximity check returns a Boolean:
 
@@ -109,7 +111,7 @@ True  # Location is within NEVI radius
 False # Not close enough
 ```
 
-# Used In
+## Used In
 
 - [`process_is_on_nevi_road()` in `roi.py`](roi_router.md#process_is_on_nevi_road)
 

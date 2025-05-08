@@ -1,17 +1,18 @@
+# ROI Controller
 
 This document explains the **ROI router logic (`roi.py`)** used to estimate the return on investment for installing EV chargers based on utility plans, traffic, and demographic data.
 
 ---
 
-# Endpoints and Workflow
+## Endpoints and Workflow
 
-## /api/v1/roi/
+### /api/v1/roi/
 
 ```python
 @ROUTE.route('/api/v1/roi', methods=["POST"])
 ```
 
-### How it works:
+#### How it works:
 
 Receives a POST payload like:
 
@@ -36,7 +37,7 @@ Receives a POST payload like:
 }
 ```
 
-### Steps:
+#### Steps:
 
 1. **ZCTA & Population Prediction**
     
@@ -72,7 +73,7 @@ Receives a POST payload like:
     
     - Prepares final structured JSON response
 
-### Output (partial):
+#### Output (partial):
 
 ```json
 {
@@ -89,17 +90,17 @@ Receives a POST payload like:
 }
 ```
 
-## /api/v1/roi_tables
+### /api/v1/roi_tables
 
 ```python
 @ROUTE.route('/api/v1/roi_tables', methods=["POST"])
 ```
 
-### Purpose:
+#### Purpose:
 
 This endpoint generates Excel ROI summary used for further analysis.
 
-### Input (example):
+#### Input (example):
 
 ```json
 {
@@ -118,7 +119,7 @@ This endpoint generates Excel ROI summary used for further analysis.
 }
 ```
 
-### Internals:
+#### Internals:
 
 - ZCTA and EV predictions are calculated.
 
@@ -126,11 +127,11 @@ This endpoint generates Excel ROI summary used for further analysis.
 
 - Passes all params to `RoiService.roi_and_nvp_calculations_sheet(...)`.
 
-### Output:
+#### Output:
 
 - Returns a JSON structure representing **ROI data table**.
 
-## Supporting Functions (called internally)
+### Supporting Functions (called internally)
 
 |Function|Purpose|
 |---|---|

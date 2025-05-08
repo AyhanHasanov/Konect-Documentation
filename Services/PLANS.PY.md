@@ -1,4 +1,6 @@
-### Purpose
+# Plans Service
+
+## Purpose
 
 This service fetches a **utility rate plan** for a given location and name, by querying OpenEI.
 

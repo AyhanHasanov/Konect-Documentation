@@ -1,20 +1,21 @@
+# Health Controller
 
 This document explains the **health.py route logic** step-by-step.  
 The whole workflow is to **monitor system availability** by verifying that the Flask server, the external Spring Boot API, and the OpenEI utility rate API are all functioning correctly across various U.S. states and sectors.
 
 ---
 
-# Endpoints and Workflow
+## Endpoints and Workflow
 
 ---
 
-## `/api/v1/health/flask`
+### `/api/v1/health/flask`
 
 ```python
 @ROUTE.route('/api/v1/health/flask', methods=["POST"])
 ```
 
-### How it works:
+#### How it works:
 
 - Returns a simple confirmation that the **Flask server is running**:
 
@@ -26,12 +27,12 @@ The whole workflow is to **monitor system availability** by verifying that the F
 
 - Always responds with **HTTP 200** if the server is operational.
 
-## `/api/v1/health/spring`
+### `/api/v1/health/spring`
 
 ```python
 @ROUTE.route('/api/v1/health/spring', methods=["POST"])
 ```
-### How it works:
+#### How it works:
 
 - Reads the current environment tag from the `ENV_TAG` environment variable (defaults to `"DEV"`).
 
@@ -51,13 +52,13 @@ https://konect-api-{env_tag}.azurewebsites.net/api/v1/actuator/health
 
 - If Spring is down or unreachable, it returns a custom error message and status.
 
-## `/api/v1/health/openei`
+### `/api/v1/health/openei`
 
 ```python
 @ROUTE.route('/api/v1/health/openei', methods=["POST"])
 ```
 
-### How it works:
+#### How it works:
 
 - **Loops through a list of representative U.S. locations** by calling:
 
@@ -91,7 +92,7 @@ update_open_ei_status(True/False)
 
 Based on whether errors occurred.
 
-### Returns:
+#### Returns:
 
 - A summary of which states passed/failed
 
@@ -100,7 +101,7 @@ Based on whether errors occurred.
 - An overall count of failures
 
 
-### Example Output:
+#### Example Output:
 
 ```json
 {

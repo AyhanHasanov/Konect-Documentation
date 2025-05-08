@@ -1,4 +1,6 @@
-### Purpose
+# ROI Service
+
+## Purpose
 
 This service is the **core ROI calculation engine**. It performs full financial modeling for EV charger deployment over a 10-year timeline using utility rate plans, traffic, hardware, and other inputs.
 

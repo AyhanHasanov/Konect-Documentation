@@ -1,17 +1,19 @@
+# Utility Controller
+
 This document explains the **utility.py route logic** step-by-step.  
 The route collects a list of **electric utility providers** available at a given location, along with the **sectors** (e.g. Commercial, Residential) they serve.
 
 ---
 
-# Endpoint and Workflow
+## Endpoint and Workflow
 
-## `/api/v1/utilities`
+### `/api/v1/utilities`
 
 ```python
 @ROUTE.route('/api/v1/utilities', methods=["POST"])
 ```
 
-## How it works:
+### How it works:
 
 - Receives a POST request:
 

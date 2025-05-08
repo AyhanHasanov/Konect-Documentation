@@ -1,3 +1,4 @@
+# Open EI
 
 This document explains the utility logic inside:  **`api/openei.py`**
 

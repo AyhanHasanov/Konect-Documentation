@@ -1,14 +1,14 @@
-
-# Purpose
+# Peak Demand Service
+## Purpose
 
 This service estimates the **true electrical peak demand (in kW)** for a charging site, based on its hardware layout and number of incoming vehicles.  
 It simulates how vehicles are plugged into available ports across **ports → chargers → cabinets → site**, and calculates the total power draw under physical and electrical constraints.
 
 This is essential for estimating **hourly and monthly demand charges** in ROI and utility cost simulations.
 
-# Function: calculate(hardware_configuration, predicted, peak_demand_per_car, utility_peak_demand_cap_kw, peak_demand_cap_kw=600)
+## Function: calculate(hardware_configuration, predicted, peak_demand_per_car, utility_peak_demand_cap_kw, peak_demand_cap_kw=600)
 
-## What it does:
+### What it does:
 
 1. Builds a **virtual model of the site hardware**:
    - Cabinets -> each with Chargers -> each with Ports.
@@ -24,7 +24,7 @@ This is essential for estimating **hourly and monthly demand charges** in ROI an
     - The **utility or artificial demand cap**
 
 
-## Example Input:
+### Example Input:
 
 ```python
 PeakDemandCalculationService.calculate(
@@ -46,20 +46,20 @@ PeakDemandCalculationService.calculate(
 )
 ```
 
-## Example Output:
+### Example Output:
 
 ```python
 150  # Total peak load handled (kW), respecting hardware and caps
 ```
 
-## Error Handling
+### Error Handling
 
 - Raises `Exception` if no free ports are available during simulation.
 
 - Assumes clean and validated hardware config structure (caller responsibility).
 
 ---
-# Used In:
+## Used In:
 
 - `DemandCalculationService.get_demand_table()`  
     → to simulate **hourly peak demand loads** for each hour/month
