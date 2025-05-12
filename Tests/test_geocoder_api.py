@@ -1,10 +1,11 @@
 from api.geocoder_api import get_geocode
 from api.azure_geocode import get_geocode as get_geocode_azure
 
-address = "17 Melnea Cass Blvd"
+address = "101 E Alma Ave"
 city = "Boston"
 state = "Massachusetts"
 zip = " 02118"
+
 
 expected = {
     "latitude": 42.332009,
@@ -17,7 +18,13 @@ def test_geocoder_api():
     assert result == expected
 
 def test_azure_geocoder_api():
-    #Fails because azure's api calculates the coordinates a little bit differently from the openchargermaps geocoder
-    #Problem: how to convert and check coordinates beforehand ???
-    result = get_geocode_azure(address, city, state, zip)
-    assert result == expected
+    coordinates = get_geocode_azure(address, city, state, zip)
+    allowed_diff = 0.0005
+
+    result = {
+        "latitude" : abs(coordinates["latitude"]-expected["latitude"]),
+        "longitude": abs(coordinates["longitude"]-expected["longitude"])
+    }
+
+    assert result["latitude"]  <= allowed_diff
+    assert result["longitude"] <= allowed_diff
