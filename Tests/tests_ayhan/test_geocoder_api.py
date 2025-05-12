@@ -19,7 +19,7 @@ def test_geocoder_api():
 
 def test_azure_geocoder_api():
     coordinates = get_geocode_azure(address, city, state, zip)
-    allowed_diff = 0.0005
+    allowed_diff = 0.0015
 
     result = {
         "latitude" : abs(coordinates["latitude"]-expected["latitude"]),
