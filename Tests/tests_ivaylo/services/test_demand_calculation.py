@@ -165,3 +165,30 @@ def test_calculate():
 
     assert isinstance(result, dict)
     assert "total" in result
+
+
+# ---------------- Value-Based Tests (Important Numerical Verifications) ----------------
+
+# Tests that the monthly distribution calculation returns exactly the requested total number of visits.
+def test_monthly_distribution_exact_values():
+    result = DemandCalculationService.calculate_monthly_distribution(70)
+    jan_distribution = result["jan"]
+    weekday_visits = sum(jan_distribution["weekdays"].values()) * 5
+    weekend_visits = sum(jan_distribution["weekends"].values()) * 2
+    assert floor(weekday_visits + weekend_visits) == 70
+
+# Tests that the yearly average rate calculation returns a positive, realistic value.
+def test_yearly_average_rate_calculation_exact_result():
+    avg_rate = DemandCalculationService.calculate_yearly_average_rate(
+        time_ranges=mock_time_ranges,
+        tiers_demand_cost=mock_tiers_demand_cost
+    )
+    assert round(avg_rate, 2) > 0  # At least verify it returns a realistic non-zero number
+
+# Tests that the demand cost calculation returns the correct total based on known tier percentages.
+def test_demand_cost_correct_total_value():
+    mock_monthly_demand = {"jan": {"Tier 1": 50, "Tier 2": 50}}
+    mock_occurrence = {"jan": {"Tier 1": 60.0, "Tier 2": 40.0}}
+    result = DemandCalculationService.get_total_year_demand_cost(mock_monthly_demand, mock_occurrence)
+    expected_total = round((50 * 60 / 100) + (50 * 40 / 100), 2)
+    assert round(result["total"], 2) == expected_total

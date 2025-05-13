@@ -86,3 +86,48 @@ def test_calculate_peak_demand_zero_case():
     )
 
     assert result == 0
+
+# ---------------- Value-Based Tests (Important Numerical Verifications) ----------------
+
+# Test that a Charger raises an exception when trying to occupy a full charger
+def test_charger_raises_exception_when_full():
+    ports = [peak_demand.Port() for _ in range(1)]
+    charger = peak_demand.Charger(ports, 50)
+    charger.occupy_free_port(20)
+
+    with pytest.raises(Exception, match="No free ports available in this charger."):
+        charger.occupy_free_port(10)
+
+
+# Test that Cabinet raises an exception when no free ports are available
+def test_cabinet_raises_exception_when_full():
+    charger = peak_demand.Charger([peak_demand.Port()], 50)
+    cabinet = peak_demand.Cabinet([charger], 50)
+    cabinet.occupy_free_port(50)
+
+    with pytest.raises(Exception, match="No free ports available in this cabinet."):
+        cabinet.occupy_free_port(10)
+
+
+# Test that Site returns the optimal cabinet when only one is available
+def test_site_returns_optimal_cabinet():
+    cabinet = peak_demand.Cabinet([
+        peak_demand.Charger([peak_demand.Port()], 50)
+    ], 50)
+    site = peak_demand.Site([cabinet], 100)
+
+    optimal = site.get_optimal_cabinet()
+    assert optimal == cabinet
+
+
+# Test edge case: when utility cap is lower than hardware capacity, demand is limited
+def test_calculate_peak_demand_limited_by_utility_cap():
+    result = peak_demand.PeakDemandCalculationService.calculate(
+        hardware_configuration=dummy_hardware_config,
+        predicted_cars=8,  # Fully occupy all 4 ports
+        peak_demand_per_car=40,  # Exceeds utility limit
+        utility_peak_demand_cap_kw=100,  # Lower than hardware can deliver
+        peak_demand_cap_kw=600
+    )
+
+    assert result <= 100  # Respect the utility cap

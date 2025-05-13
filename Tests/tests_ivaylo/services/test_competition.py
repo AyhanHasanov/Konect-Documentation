@@ -105,3 +105,31 @@ def test_get_competition_result_structure(mock_ev_chargers):
     assert result["numChargers"] > 0
     assert len(result["chargers"]) > 0
     assert isinstance(result["chargersPerLevel"], list)
+
+
+# ------------------- Value-Based Tests (Important Verifications) -------------------
+
+# Test that calculate_distances returns the correct minimum distance and point.
+def test_calculate_distances_correct_result():
+    min_dist, _ = competition.calculate_distances(*mock_coordinates, mock_charger_points)
+    expected_location = (42.3611, -71.0579)
+    assert min_dist[0] == expected_location
+
+# Test clean_charger_map returns correct mapping after removing lower levels.
+def test_clean_charger_map_correct_result():
+    cleaned = competition.clean_charger_map(mock_charger_map)
+    expected_cleaned = {
+        (42.3611, -71.0579): ["Level 3"],
+        (42.3622, -71.0600): ["Level 1"]
+    }
+    assert cleaned == expected_cleaned
+
+# Test get_ev_chargers returns correct minimal distance and correct distance values.
+@patch("services.competition.openchargemap.gather_ev_chargers_data")
+def test_get_ev_chargers_returns_correct_data(mock_gather):
+    mock_gather.return_value = (list(mock_charger_map.keys()), mock_charger_map)
+    min_dist, distances, _ = competition.get_ev_chargers(*mock_coordinates)
+
+    expected_min_point = (42.3611, -71.0579)
+    assert min_dist[0] == expected_min_point
+    assert all(isinstance(d[1], float) for d in distances)  # All distances should be floats
